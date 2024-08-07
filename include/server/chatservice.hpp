@@ -5,6 +5,8 @@
 #include <unordered_map>
 #include <functional>
 #include <json.hpp>
+#include "UserModel.hpp"
+
 
 using namespace std;
 using namespace muduo;
@@ -37,6 +39,11 @@ private:
 
     // this map is to get the message id and the according method of the Handlers
     unordered_map<int, MsgHandler> _msgHandlerMap;
+
+    // object for data processing
+    UserModel _userModel;
+
+
 };
 
 #endif

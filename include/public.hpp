@@ -8,6 +8,7 @@ The public file for Servers and Clients
 enum EnMsgType{
     LOGIN_MSG = 1, // Login message
     REG_MSG, // Registration message
+    REG_MSG_ACK // ack for registration 
 };
 
 #endif

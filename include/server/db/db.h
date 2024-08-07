@@ -23,6 +23,9 @@ public:
     // DB Qquery
     MYSQL_RES *query(string sql);
 
+    // get DB connection
+    MYSQL * getConnection();
+
 private:
     MYSQL *_conn;
 };

@@ -7,7 +7,6 @@ static string user = "root";
 static string password = "root";
 static string dbname = "chat";
 
-
 MySQL::MySQL()
 {
     _conn = mysql_init(nullptr);
@@ -24,11 +23,16 @@ MySQL::~MySQL()
 // DB connection
 bool MySQL::connect()
 {
-    MYSQL * p = mysql_real_connect(_conn, server.c_str(), user.c_str(), password.c_str(), dbname.c_str(), 3306, nullptr, 0);
+    MYSQL *p = mysql_real_connect(_conn, server.c_str(), user.c_str(), password.c_str(), dbname.c_str(), 3306, nullptr, 0);
 
     if (p != nullptr)
     {
         mysql_query(_conn, "set names gbk");
+        LOG_INFO << __FILE__ << ":" << __LINE__ << ":" << "connect MySQL SUCCESS!";
+    }
+    else
+    {
+        LOG_INFO << __FILE__ << ":" << __LINE__ << ":" << "connect MySQL FAILED!";
     }
 
     return p;
@@ -40,24 +44,29 @@ bool MySQL::update(string sql)
 
     if (mysql_query(_conn, sql.c_str()))
     {
-        LOG_INFO << __FILE__ << ":" << __LINE__ << ":" << sql << "update FAILED!!!";
+        LOG_INFO << __FILE__ << ":" << __LINE__ << ":" << sql << " update FAILED!!!";
 
-            return false;
+        return false;
     }
 
     return true;
 }
 
 // DB Qquery
-MYSQL_RES * MySQL::query(string sql)
+MYSQL_RES *MySQL::query(string sql)
 {
 
     if (mysql_query(_conn, sql.c_str()))
     {
         LOG_INFO << __FILE__ << ":" << __LINE__ << ":" << sql << "query FAILED!!!";
 
-            return nullptr;
+        return nullptr;
     }
 
     return mysql_use_result(_conn);
+}
+
+MYSQL *MySQL::getConnection()
+{
+    return _conn;
 }
