@@ -11,6 +11,12 @@ public:
     // insert new users
     bool insert(User &user);
 
+    // query user info by primary key
+    User query(int id);
+
+    // update user info
+    bool updateState(User user);
+
 private:
 };
 

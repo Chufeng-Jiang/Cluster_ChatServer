@@ -3,6 +3,7 @@
 #include <json.hpp>
 #include <functional>
 #include <string>
+#include <iostream>
 
 using namespace std;
 using namespace placeholders;
@@ -29,18 +30,21 @@ void ChatServer::start()
 }
 
 // the callback for connection event
-void ChatServer::onConnection(const TcpConnectionPtr & conn)
+void ChatServer::onConnection(const TcpConnectionPtr &conn)
 {
-    // when client disconnected from client
+    // when client disconnected from server
     if (!conn->connected())
     {
+        cout << "is disconnected......." << endl;
+        ChatService::instance()->clientCloseException(conn);
+        cout << "is shutting down...." << endl;
         conn->shutdown();
     }
 }
 
 // the callback for read and write event
-void ChatServer::onMessage(const TcpConnectionPtr & conn,
-                           Buffer * buffer,
+void ChatServer::onMessage(const TcpConnectionPtr &conn,
+                           Buffer *buffer,
                            Timestamp time)
 {
     string buf = buffer->retrieveAllAsString();
@@ -48,8 +52,8 @@ void ChatServer::onMessage(const TcpConnectionPtr & conn,
     // data decode
     json js = json::parse(buf);
 
-    //decoupling the code of the network module from the code of the business module
-    //js["msgid"] -> business handler -> conn js time
+    // decoupling the code of the network module from the code of the business module
+    // js["msgid"] -> business handler -> conn js time
     auto msgHandler = ChatService::instance()->getHandler(js["msgid"].get<int>());
 
     // callback the Handler of the binded event and messages, to execute the business service.
