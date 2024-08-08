@@ -83,3 +83,16 @@ bool UserModel::updateState(User user)
 
     return false;
 }
+
+// reset the user sate
+void UserModel::resetState()
+{
+    char sql[1024] = "update user set state = 'offline' where state = 'online'";
+
+    MySQL mysql;
+
+    if (mysql.connect())
+    {
+        mysql.update(sql);
+    }
+}

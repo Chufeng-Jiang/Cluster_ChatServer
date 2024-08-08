@@ -1,0 +1,19 @@
+telnet 127.0.0.1 6000
+
+// user registration
+{"msgid":3, "name":"california", "password":"123456"}
+
+// user login
+{"msgid":1, "id":3, "password":"123456"}
+{"msgid":1, "id":4, "password":"123456"}
+
+// 1-1 Talk
+{"msgid":5, "id":3, "from":"sfbu", "to":4, "msg":"Good morning!"}
+{"msgid":5, "id":4, "from":"sjsu", "to":3, "msg":"Woooowwww!"}
+
+// offlineMsg
+{"msgid":5, "id":3, "from":"sfbu", "to":4, "msg":"Offline: Wake up!"}
+{"msgid":5, "id":3, "from":"sfbu", "to":4, "msg":"Offline: I am waiting for you!"}
+
+--- login to check the offlinemsg
+{"msgid":1, "id":4, "password":"123456"}

@@ -35,9 +35,7 @@ void ChatServer::onConnection(const TcpConnectionPtr &conn)
     // when client disconnected from server
     if (!conn->connected())
     {
-        cout << "is disconnected......." << endl;
         ChatService::instance()->clientCloseException(conn);
-        cout << "is shutting down...." << endl;
         conn->shutdown();
     }
 }

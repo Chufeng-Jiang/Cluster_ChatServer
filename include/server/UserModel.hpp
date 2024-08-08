@@ -17,6 +17,9 @@ public:
     // update user info
     bool updateState(User user);
 
+    // reset the user sate
+    void resetState();
+
 private:
 };
 

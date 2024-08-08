@@ -62,10 +62,11 @@ void ChatService::login(const TcpConnectionPtr &conn, json &js, Timestamp)
 
             // check and process the offline messages. If there's offline msg, transfer it.
             vector<string> vec = _offlineMsgModel.query(id);
-            if(!vec.empty()){
+            if (!vec.empty())
+            {
                 response["offlinemsg"] = vec;
 
-                //once checked, remove the offlinemsg from the db.
+                // once checked, remove the offlinemsg from the db.
                 _offlineMsgModel.remove(id);
             }
 
@@ -182,5 +183,11 @@ void ChatService::oneChat(const TcpConnectionPtr &conn, json &js, Timestamp)
 
     // toid is not online, store offline msg
     _offlineMsgModel.insert(toid, js.dump());
+}
 
+// reset the server for its exception
+void ChatService::reset()
+{
+    // set online user as offline
+    _userModel.resetState();
 }

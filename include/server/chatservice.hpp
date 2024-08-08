@@ -36,6 +36,9 @@ public:
     // functionality for 1-1 Talk
     void oneChat(const TcpConnectionPtr &conn, json &js, Timestamp);
 
+    // reset the server for its exception
+    void reset();
+
     // function to get the handler accoording to the message id
     MsgHandler getHandler(int msgid);
 
